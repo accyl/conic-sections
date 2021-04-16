@@ -24,8 +24,12 @@ public class Main extends PApplet{
 	}
 
 	
+	final ConesMath conesParabola = new ConesMath(0.1F,0.1F,-30);
+	final ConesMath conesHyperbola = new ConesMath(0.1F,0F,-30); 
+	// this is a dummy visualization because you would have to view the hyperbola at the plane perpen
+	final ConesMath conesEllipse = new ConesMath(0.2F,0.3F,-30);
 
-	ConesMath cones = new ConesMath(0.1F,0.1F,-30);
+	ConesMath cones = conesParabola;
 	PointsRenderer renderer = new PointsRenderer(cones.tracker);
 	int z = 0;
 	@Override
