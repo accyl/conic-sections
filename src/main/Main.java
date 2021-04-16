@@ -1,5 +1,6 @@
 package main;
 import math.ConesMath;
+import math.PointsRenderer;
 import processing.core.PApplet;
 
 public class Main extends PApplet{
@@ -21,8 +22,11 @@ public class Main extends PApplet{
 		this.surface.setResizable(true);
 		background(0x00FFFFFF); 
 	}
+
 	
-	ConesMath cones = new ConesMath(0.4F,0.4F,-30);
+
+	ConesMath cones = new ConesMath(0.1F,0.1F,-30);
+	PointsRenderer renderer = new PointsRenderer(cones.tracker);
 	int z = 0;
 	@Override
 	public void draw() {
@@ -33,6 +37,9 @@ public class Main extends PApplet{
 		background(0x00FFFFFF); 
 		cones.setZ(z++);
 		cones.planeXCone();
+//		cones.tracker.draw(-1);
+		renderer.draw(-1);
+
 	}
 	boolean pause = false;
 	@Override

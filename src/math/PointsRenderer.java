@@ -1,44 +1,34 @@
 package math;
 
-import java.util.ArrayList;
-
 import java.util.List;
 
 import main.Main;
+import math.points.tracker.PointsTracker;
 
-
-
-public class PointsTracker {
-	public List<Float> xs, ys;
-
-	public PointsTracker() {
-		this.xs = new ArrayList<>();
-		this.ys = new ArrayList<>();
+public class PointsRenderer {
+	public PointsTracker tracker;
+	public PointsRenderer(PointsTracker pointsToDraw) {
+		this.tracker = pointsToDraw;
 	}
-	
-	public float cachx, cachy;
-	
+	public boolean interpolation = true;
+	public boolean hybrid = false;
 	/**
-	 * Only add one copy, please - the other one generated at draw
-	 * @param x
-	 * @param y
+	 * Stop at stopIndex. stopIndex will NOT be included.
+	 * if stopIndex is -1, then it will draw until the end of the list.
+	 * @param stopIndex
 	 */
-	public void add(float x, float y) {
-		if(x != x || y != y) return; // NaN
-		if(cachx == x && cachy == y) return; // remove redundancies
-		cachx = x;
-		cachy = y;
-		xs.add(x); 
-		ys.add(y);
-	}
-	boolean interpolation = true;
-	boolean hybrid = false;
-	public void draw() {
+	public void draw(int stopIndex) {
+		List<Float> xs = tracker.xs;
+		List<Float> ys = tracker.ys;
+		if(stopIndex == -1) {
+			stopIndex = xs.size();
+		}
+
 		Main main = Main.main;
 		main.pushStyle();
 		main.strokeWeight(2);
 		main.stroke(255, 0, 0);
-		if(xs.size() < 1) return;
+		if(stopIndex < 1) return;
 		int i;
 		float cachx = 0;
 		float cachy = 0 ;
@@ -56,7 +46,7 @@ public class PointsTracker {
 		
 	
 
-		for(;i<xs.size();i++) {
+		for(;i<stopIndex;i++) {
 			float x = xs.get(i);
 			float y = ys.get(i);
 			if(interpolation) {
@@ -94,6 +84,4 @@ public class PointsTracker {
 //		}
 		main.popStyle();
 	}
-	
-	
 }
